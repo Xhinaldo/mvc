@@ -46,11 +46,11 @@ class User_Controller
 				else{
 					$email=$_REQUEST["email"];
 					$email_err="";
-					$sql="SELECT email FROM users WHERE email=?";
-					$result = $DB->execute($sql, array($email));
+					$sql="SELECT username,email FROM users WHERE username=? OR email=?";
+					$result = $DB->execute($sql, array($username,$email));
 					$row = $result->fetchAll(PDO::FETCH_ASSOC);
 					if(count($row)>0){
-						$email_err="Emaili eshte perdorur. Kaloni tek Login per te hyre ne faqe";
+						$email_err="Emaili/username eshte perdorur. Kaloni tek Login per te hyre ne faqe";
 						//echo $email_err;
 					}
 				}
@@ -95,17 +95,17 @@ class User_Controller
 				$hash = md5( rand(0,1000) );
 				$sql = "INSERT INTO users (username, email, password, hash, active) VALUES (?, ?, ?, ?, ?)";
 				$result= $DB->execute($sql, array($username, $email, $hashed_password, $hash, $active));
-				echo("<script>location.href = 'index.php?controller=view&action=home';</script>");
+				echo("<script>location.href = 'index.php?controller=user&action=login';</script>");
 				$sukses = 'sukses';
 				//header("Refresh: 0; url=localhost/mvc/index.php?controller=user&action=login");
 			}
 		}
-		echo json_encode(array('username' => $username_err,
-								'email' => $email_err,
-								'password' => $password_err,
-								'kpassword' => $kpassword_err,
-								'sukses' => $sukses,
-						));
+		// echo json_encode(array('username' => $username_err,
+		// 						'email' => $email_err,
+		// 						'password' => $password_err,
+		// 						'kpassword' => $kpassword_err,
+		// 						'sukses' => $sukses,
+		// 				));
 	} 
 
 
@@ -121,11 +121,6 @@ class User_Controller
 			}
 			else if (isset($_POST["email"])){
 				$email=$_POST["email"];
-				// if (!filter_var($email, FILTER_VALIDATE_EMAIL))
-				// {
-
-				// 	$email_err="Ju lutem vendosni nje email te vlefshem.";
-				// }
 			}
 			if(empty($_POST["password"])){
 				$password_err="Ju lutem vendosni nje password te vlefshem";
@@ -147,13 +142,13 @@ class User_Controller
 					if($row['email'] == $email || $row['username'] == $email)
 					{
 						if ($hashed_password==$row["password"]) {
-							if($row["active"]==1){
+							if($row["active"] == 1){
 								echo "<script>alert('Login i suksesshem');</script>";
 				                $_SESSION['email'] = $email;
 								echo("<script>location.href = 'index.php?controller=view&action=home';</script>");
 							}
 							else{
-								echo "<script>confirm('Llogaria juaj nuk eshte e aktivizuar. Ju lutem aktivizoni llogarine.');</script>";
+								echo "<script>alert('Llogaria juaj nuk eshte e aktivizuar. Ju lutem aktivizoni llogarine.');</script>";
 								$general_err="Llogaria juaj nuk eshte e aktivizuar. Ju lutem aktivizoni llogarine.";
 								//header("Refresh: 0; url = ifNotConfirmed.php");
 							}
