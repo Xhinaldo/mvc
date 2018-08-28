@@ -15,7 +15,7 @@
 		<header class="navbar navbar-fixed-top scroll-up top" id=" header" style="position: relative; width: 100%;">
 			
 				<div class="container-fluid">
-					<a href="http://localhost:8080/mvc/index.php">
+					<a href="http://localhost/mvc/index.php">
 						<img src="">
 						<h2 class="tagline">Connections create opportunities.</h2>
 					</a>
@@ -27,10 +27,10 @@
 				</div>
 				<div id="actions" style="display: none">
 					<?php if(isset($_SESSION['email'])): ?>
-						<a href="http://localhost:8080/mvc/index.php?controller=user&action=logout"><button class="btn btn-danger">DIL</button></a>
+						<a href="http://localhost/mvc/index.php?controller=user&action=logout"><button class="btn btn-danger">DIL</button></a>
 					<?php else: ?>
-						<a href="http://localhost:8080/mvc/index.php?controller=user&action=login"><button class="btn btn-info">HYR</button></a>
-						<a href="http://localhost:8080/mvc/index.php?controller=user&action=register"><button class="btn btn-primary">RRGJISTROHU</button></a>
+						<a href="http://localhost/mvc/index.php?controller=user&action=login"><button class="btn btn-info">HYR</button></a>
+						<a href="http://localhost/mvc/index.php?controller=user&action=register"><button class="btn btn-primary">RRGJISTROHU</button></a>
 					<?php endif; ?>
 				</div>	
 			

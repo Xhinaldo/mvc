@@ -1,6 +1,6 @@
 <?php
 
-define('DATABASE_NAME', 'mvc');
+define('DATABASE_NAME', 'Taleas');
 
 define('DATABASE_USER', 'root');
 
