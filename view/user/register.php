@@ -15,8 +15,7 @@
 		<!-- <?php //include ("menu.php");?> -->
     <div class="wrapper">
     	<fieldset>
-			<legend style="text-align: center;">Rregjistrohu</legend>
-	        <h2>Rregjistrohu</h2>
+			<legend style="text-align: center;">Regjistrohu</legend>
 	        <p>Krijo nje llogari</p>
 	        <form action="" method="POST">
 	        	<label class="help-block" id="general_err" style="color: #BA0101;"></label>
@@ -41,7 +40,23 @@
 	                <span class="help-block" <?php echo $kpassword_err; ?></b></span>
 	            </div>
 	            <div class="form-group">
-	                <input type="submit" class="btn btn-danger" value="Rregjistrohu" id="sub">
+	                <label>Status</label>
+	                <input type="radio" class="radio-inline" name="Radio" value="HS" required checked>HS
+		            <input type="radio" class="radio-inline" name="Radio" value="UNI" required >UNI
+	            </div>
+	            <div class="form-group" style="display: none;" id='dega'>
+	              	<div class="form-group">
+		                <label for="sel1">Select list:</label>
+					  	<select class="form-control" id="">
+					    	<option>1</option>
+						    <option>2</option>
+						    <option>3</option>
+						    <option>4</option>
+						</select>
+		            </div>
+	            </div>
+	            <div class="form-group">
+	                <input type="submit" class="btn btn-danger" value="Regjistrohu">
 	                <input type="reset" class="btn btn-default" value="Fshi">
 	            </div>
 	            <p>Keni nje llogari? <a href="index.php"style="color: #BA0101;"><b>Bej login ketu.</b></a></p>
@@ -51,35 +66,45 @@
    </div>
 </body>
 
-<script type="text/javascript">
-	$(document).ready(function(){
-		// $('#butonhs').click(function(){
-		// 	$('#divhs').slideToggle('slow');
-		// 	$('#divuni').hide(500);
-		// });
-		// $('#butonuni').click(function(){
-		// 	$('#divuni').slideToggle('slow');
-		// 	$('#divhs').hide(500);
-		// });
-        //alert('return sent');
-        $("#sub").click(function(event){
-				event.preventDefault();
-				var username = $('#username').val();
-				var email = $('#email').val();
-				var password = $('#password').val();
-				var kpassword = $('#kpassword').val();
+<script >
+	// $(document).ready(function(){
+	// 	// $('#butonhs').click(function(){
+	// 	// 	$('#divhs').slideToggle('slow');
+	// 	// 	$('#divuni').hide(500);
+	// 	// });
+	// 	// $('#butonuni').click(function(){
+	// 	// 	$('#divuni').slideToggle('slow');
+	// 	// 	$('#divhs').hide(500);
+	// 	// });
+ //        //alert('return sent');
+ //        $("#sub").click(function(event){
+	// 			event.preventDefault();
+	// 			var username = $('#username').val();
+	// 			var email = $('#email').val();
+	// 			var password = $('#password').val();
+	// 			var kpassword = $('#kpassword').val();
 				
-				$.ajax({
-		            type: "POST",
-		            url: "http://localhost/mvc/index.php?controller=user&action=register",
-		            data: { get_param: 'value'},
-		            dataType:'json', 
-		            success function(data){
-		            	var json = $.parseJSON('data');
-		                $('#general_err').append(json.email_err);
-		            }
-		        });
-			});
-	});
+	// 			$.ajax({
+	// 	            type: "POST",
+	// 	            url: "http://localhost/mvc/index.php?controller=user&action=register",
+	// 	            data: { get_param: 'value'},
+	// 	            dataType:'json', 
+	// 	            success function(data){
+	// 	            	var json = $.parseJSON('data');
+	// 	                $('#general_err').append(json.email_err);
+	// 	            }
+	// 	        });
+	// 		});
+	// });
+	$('input[type="radio"]').click(function(){
+        if($(this).attr("value")=="HS"){
+            $("#dega").hide('slow');
+        }
+        if($(this).attr("value")=="UNI"){
+            $("#dega").show('slow');
+
+        }        
+    });
+	$('input[type="radio"]').trigger('click');
 
 </script>

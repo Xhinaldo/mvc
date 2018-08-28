@@ -1,5 +1,9 @@
 <?php
 
+  use PHPMailer\PHPMailer\PHPMailer;
+  use PHPMailer\PHPMailer\Exception;
+
+  require 'vendor/autoload.php';
 
   require_once('config.php');
 
@@ -7,6 +11,8 @@
 
  
 $DB = new DBPDO();
+
+$mail = new PHPMailer(true);
 
 
   if (isset($_GET['controller']) && isset($_GET['action'])) {

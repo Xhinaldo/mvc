@@ -26,7 +26,6 @@
 	    <div class="wrapper">
 	    	<fieldset>
 				<legend>Login</legend>
-	        <h2>Login</h2>
 	        <p>Ju lutem vendosni emailin/username dhe passwordin</p>
 	        <form action="http://localhost/mvc/index.php?controller=user&action=login" method="POST">
 	        	<div>

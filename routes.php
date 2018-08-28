@@ -17,7 +17,7 @@
   }
 
   $controllers = array('view' => ['home', 'error','university' ],
-                        'user' => ['register','test','login','logout'] , 
+                        'user' => ['register','test','login','logout', 'send_email', 'verify_email'] , 
                       );
 
   if (array_key_exists($controller, $controllers)) {

@@ -1,5 +1,6 @@
 <?php
 
+	
 
 class User_Controller
 {
@@ -95,6 +96,8 @@ class User_Controller
 				$hash = md5( rand(0,1000) );
 				$sql = "INSERT INTO users (username, email, password, hash, active) VALUES (?, ?, ?, ?, ?)";
 				$result= $DB->execute($sql, array($username, $email, $hashed_password, $hash, $active));
+				echo("<script>alert('Ju lutem verifikoni emailin.')</script>");
+				$this->send_email($email,$hash);
 				echo("<script>location.href = 'index.php?controller=user&action=login';</script>");
 				$sukses = 'sukses';
 				//header("Refresh: 0; url=localhost/mvc/index.php?controller=user&action=login");
@@ -177,6 +180,70 @@ class User_Controller
 		echo "<script>alert('Ju dolet nga llogaria')</script>";
 		session_destroy();
 		header('Refresh: 0;url=http://localhost/mvc/index.php?controller=view&action=home');
+	}
+
+	public function send_email($email,$hash) {
+		
+		global $DB;
+		
+
+		global $mail;                             				  // Passing `true` enables exceptions
+		//echo "<script>alert('Gabimmmm.');</script>";
+				try {
+
+				    //Server settings
+				    $mail->SMTPDebug = 0;                                 // Enable verbose debug output
+				    $mail->isSMTP();                                      // Set mailer to use SMTP
+				    $mail->Host = 'smtp.gmail.com;';  					  // Specify main and backup SMTP servers
+				    $mail->SMTPAuth = true;                               // Enable SMTP authentication
+				    $mail->Username = 'dergoemailtaleas@gmail.com';       // SMTP username
+    				$mail->Password = 'emaildergues1';                    // SMTP password
+				    $mail->SMTPSecure = 'tsl';                            // Enable TLS encryption, `ssl` also accepted
+				    $mail->Port = 587;                                    // TCP port to connect to
+
+				    //Recipients
+				    $mail->setFrom('dergoemailtaleas@gmail.com', 'Mailer');
+				    $mail->addAddress($email);     // Add a recipient
+				    $mail->isHTML(false);                                  // Set email format to HTML
+				    $mail->Subject = 'Verifikimi';
+				    $mail->Body    = "
+ 
+						Faleminderit qe u rregjistruat!
+						Llogaria juaj u krijua dhe eshte gati per tu perdorur.
+						 
+						Kopjoni kete link dhe shkoni tek ky link:
+						https://localhost/mvc/index.php?controller=user&action=verify_email&email=".$email."&hash=".$hash."
+						 
+						";
+				    //$mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
+
+				    $mail->send();
+				    //echo 'Message has been sent';
+				} catch (Exception $e) {
+				   echo "<script>alert('Gabim.".$mail->ErrorInfo."');</script>";
+				}
+	}
+
+	public function verify_email() {
+		global $DB;
+		if(isset($_GET['email']) && !empty($_GET['email']) AND isset($_GET['hash']) && !empty($_GET['hash'])){
+		    $email = $_GET['email']; 
+		    $hash = $_GET['hash'];
+		    $search = $DB->execute("SELECT email, hash, active FROM users WHERE email='".$email."' AND hash='".$hash."' AND active='0'");
+		    if($search == false){
+		        $DB->execute("UPDATE users SET active=1 WHERE email='$email' AND hash='$hash' AND active=0");
+		        echo "<script>alert('Llogaria juaj eshte verifikuar. Tani mund te logoheni.')</script>";
+		        header("Refresh: 0; url=index.php?controller=user&action=login");
+	    	}
+	    	else{
+	        	echo "<script>alert('URL eshte e pavlefshme ose ju e keni aktivizuar llogarine tuaj.')</script>";
+	        	header("Refresh: 0; url=index.php?controller=user&action=login");
+	   		}
+		}
+		else{
+		    echo "<script>alert('URL eshte e pavlefshme ose ju e keni aktivizuar llogarine tuaj.')</script>";
+	        header("Refresh: 0; url=index.php?controller=view&action=home");
+		}
 	}
 
 	public function thjeshteso($data)
