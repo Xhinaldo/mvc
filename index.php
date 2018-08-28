@@ -9,7 +9,7 @@
 
   require_once('model/connectdb.php');
 
- echo("ndryshim");
+ 
 $DB = new DBPDO();
 
 $mail = new PHPMailer(true);
