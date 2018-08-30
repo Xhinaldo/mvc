@@ -16,5 +16,11 @@
     public function university() {
       require_once('view/university.php');
     }
+    public function verified() {
+      require_once('view/verified.php');
+    }
+    public function broken_link(){
+      require_once('view/broken_link.php');
+    }
   }
 ?>

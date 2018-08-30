@@ -16,7 +16,7 @@
     $controller->{ $action }();
   }
 
-  $controllers = array('view' => ['home', 'error','university' ],
+  $controllers = array('view' => ['home', 'error','university', 'verified', 'broken_link'],
                         'user' => ['register','test','login','logout', 'send_email', 'verify_email'] , 
                       );
 

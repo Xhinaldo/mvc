@@ -14,79 +14,79 @@ class User_Controller
 	}
 
 	public function register(){
-		$username_err=$email_err=$password_err=$kpassword_err=$general_err=$sukses="";
+		$username_err=$email_err=$password_err=$kpassword_err=$general_err=$dega_err="";
 		require_once('view/user/register.php');
 		global $DB;
 		
 		if ($_SERVER["REQUEST_METHOD"] == "POST"){
 
-			if(empty($_REQUEST["username"])){
-				$username_err="Ju lutem vendosni nje username te vlefshem";
-				//echo $username_err;
-				echo "<script>alert('Gabim 1')</script>";
-			}
-			else if(isset($_REQUEST["username"])){
+			// if(empty($_REQUEST["username"])){
+			// 	$username_err="Ju lutem vendosni nje username te vlefshem";
+			// 	//echo $username_err;
+			// 	echo "<script>alert('Gabim 1')</script>";
+			// }
+			// else if(isset($_REQUEST["username"])){
 
-				$username = $_REQUEST["username"];
-				$username = $this->thjeshteso($username);
-				if (!preg_match("/^[a-zA-Z0-9]*$/",$username)) {
-					$username_err="Ju lutem vendosni nje username te vlefshem";
-					//echo $username_err;
-					echo "<script>alert('Gabim 2')</script>";
-				}
-			}
-			if(empty($_REQUEST["email"])){
-				$email_err="Ju lutem vendosni nje email te vlefshem";
-				//echo $email_err;
-			}
-			else if (isset($_REQUEST["email"])){
-				if (!filter_var($_REQUEST["email"], FILTER_VALIDATE_EMAIL)){
-					$email_err="Ju lutem vendosni nje email te vlefshem";
-					//echo $email_err;
-				}
-				else{
-					$email=$_REQUEST["email"];
-					$email_err="";
-					$sql="SELECT username,email FROM users WHERE username=? OR email=?";
-					$result = $DB->execute($sql, array($username,$email));
-					$row = $result->fetchAll(PDO::FETCH_ASSOC);
-					if(count($row)>0){
-						$email_err="Emaili/username eshte perdorur. Kaloni tek Login per te hyre ne faqe";
-						//echo $email_err;
-					}
-				}
-			}
-			if(empty($_REQUEST["password"])){
-				$password_err="Ju lutem vendosni nje password te vlefshem";
-				//echo $password_err;
-			}
-			else if(isset($_REQUEST["password"])){
-				$password=$_REQUEST["password"];
-				$password = $this->thjeshteso($password);
-				if (!preg_match("/^[a-zA-Z0-9]*$/",$password)) {
-					$password_err="Ju lutem vendosni nje username te vlefshem";
-					//echo $password_err;
-				}
-				else
-					$hash_password=md5($password);
-			}
-			if(empty($_REQUEST["kpassword"])){
-				$kpassword_err="Ju lutem konfirmoni passwordin";
-				//echo $kpassword_err;
-			}
-			else if(isset($_REQUEST["kpassword"])){
-				$kpassword=$_REQUEST["kpassword"];
-				if (!preg_match("/^[a-zA-Z0-9]*$/",$kpassword)) {
-					$kpassword_err="Ju lutem vendosni nje username te vlefshem";
-					//echo $kpassword_err;
-				}
-				else if($kpassword!=$password){
-					$kpassword_err="Passwordet nuk ngjasojne";
-					//echo $kpassword_err;
-				}
-			}
+			// 	$username = $_REQUEST["username"];
+			// 	$username = $this->thjeshteso($username);
+			// 	if (!preg_match("/^[a-zA-Z0-9]*$/",$username)) {
+			// 		$username_err="Ju lutem vendosni nje username te vlefshem";
+			// 		//echo $username_err;
+			// 		echo "<script>alert('Gabim 2')</script>";
+			// 	}
+			// }
+			// if(empty($_REQUEST["email"])){
+			// 	$email_err="Ju lutem vendosni nje email te vlefshem";
+			// 	//echo $email_err;
+			// }
+			// else if (isset($_REQUEST["email"])){
+			// 	if (!filter_var($_REQUEST["email"], FILTER_VALIDATE_EMAIL)){
+			// 		$email_err="Ju lutem vendosni nje email te vlefshem";
+			// 		//echo $email_err;
+			// 	}
+			// 	else{
+			// 		$email=$_REQUEST["email"];
+			// 		$email_err="";
+			// 		$sql="SELECT username,email FROM users WHERE username=? OR email=?";
+			// 		$result = $DB->execute($sql, array($username,$email));
+			// 		$row = $result->fetchAll(PDO::FETCH_ASSOC);
+			// 		if(count($row)>0){
+			// 			$email_err="Emaili/username eshte perdorur. Kaloni tek Login per te hyre ne faqe";
+			// 			//echo $email_err;
+			// 		}
+			// 	}
+			// }
+			// if(empty($_REQUEST["password"])){
+			// 	$password_err="Ju lutem vendosni nje password te vlefshem";
+			// 	//echo $password_err;
+			// }
+			// else if(isset($_REQUEST["password"])){
+			// 	$password=$_REQUEST["password"];
+			// 	$password = $this->thjeshteso($password);
+			// 	if (!preg_match("/^[a-zA-Z0-9]*$/",$password)) {
+			// 		$password_err="Ju lutem vendosni nje username te vlefshem";
+			// 		//echo $password_err;
+			// 	}
+			// 	else
+			// 		$hash_password=md5($password);
+			// }
+			// if(empty($_REQUEST["kpassword"])){
+			// 	$kpassword_err="Ju lutem konfirmoni passwordin";
+			// 	//echo $kpassword_err;
+			// }
+			// else if(isset($_REQUEST["kpassword"])){
+			// 	$kpassword=$_REQUEST["kpassword"];
+			// 	if (!preg_match("/^[a-zA-Z0-9]*$/",$kpassword)) {
+			// 		$kpassword_err="Ju lutem vendosni nje username te vlefshem";
+			// 		//echo $kpassword_err;
+			// 	}
+			// 	else if($kpassword!=$password){
+			// 		$kpassword_err="Passwordet nuk ngjasojne";
+			// 		//echo $kpassword_err;
+			// 	}
+			// }
 
-			if(empty($username_err) && empty($email_err) && empty($password_err) && empty($kpassword_err)){
+			// if(empty($username_err) && empty($email_err) && empty($password_err) && empty($kpassword_err)){
 
 				$username = strtolower($_REQUEST['username']);
 				$email = $_REQUEST['email'];
@@ -94,23 +94,99 @@ class User_Controller
 				$hashed_password = md5($password);
 				$active=0;
 				$hash = md5( rand(0,1000) );
-				$sql = "INSERT INTO users (username, email, password, hash, active) VALUES (?, ?, ?, ?, ?)";
-				$result= $DB->execute($sql, array($username, $email, $hashed_password, $hash, $active));
-				echo("<script>alert('Ju lutem verifikoni emailin.')</script>");
+				$status = $_POST['Radio'];
+				if($status == "HS")
+					$status = 0;
+				else
+					$status = 1;
+				// $dega = $_POST['degas'];
+				// $presql = "SELECT id FROM deget WHERE name = '$dega'";
+				// $preresult= $DB->execute($presql);
+				// $prerow = $preresult->fetch(PDO::FETCH_ASSOC);
+				// $dega_id = $prerow['id'];
+				$sql = "INSERT INTO users (username, email, password, hash, active, status, dega_id) VALUES (?, ?, ?, ?, ?, ?, ?)";
+				$result= $DB->execute($sql, array($username, $email, $hashed_password, $hash, $active, $status, 1));
+				
 				$this->send_email($email,$hash);
+				echo("<script>alert('Ju lutem verifikoni emailin.')</script>");
 				echo("<script>location.href = 'index.php?controller=user&action=login';</script>");
-				$sukses = 'sukses';
+				//$sukses = 'sukses';
 				//header("Refresh: 0; url=localhost/mvc/index.php?controller=user&action=login");
-			}
+			//}
 		}
-		// echo json_encode(array('username' => $username_err,
-		// 						'email' => $email_err,
-		// 						'password' => $password_err,
-		// 						'kpassword' => $kpassword_err,
-		// 						'sukses' => $sukses,
-		// 				));
+		
 	} 
 
+	public function registerAjax(){
+		$username = $_POST['username'];
+		$email = $_POST['email'];
+		$password = $_POST['password'];
+		$kpassword = $_POST['kpassword'];
+		$username_err = $email_err = $password_err = $kpassword_err = $sukses = '';
+		if(empty($username)){
+				$username_err="Ju lutem vendosni nje username te vlefshem";
+		}
+		else if(isset($username)){
+			if (!preg_match("/([A-Za-z0-9]+)/",$username)) {
+				$username_err="Ju lutem vendosni nje username te vlefshem";
+			}
+			else if (strlen($username)<4)
+				$username_err = "Username eshte shume i shkurter";
+			else if (strlen($username)>10)
+				$username_err = "Username eshte shume i gjate";
+			else{
+				$sql="SELECT username FROM users WHERE username=?";
+				$result = $DB->execute($sql, array($username));
+				$row = $result->fetchAll(PDO::FETCH_ASSOC);
+				if(count($row)>0){
+					$username_err="Username eshte perdorur.";
+				}
+			}
+		}
+		if(empty($email)){
+			$email_err="Ju lutem vendosni nje email te vlefshem";
+		}
+		else if (isset($email)){
+			if (!filter_var($email, FILTER_VALIDATE_EMAIL)){
+				$email_err="Ju lutem vendosni nje email te vlefshem";
+			}
+			else{
+				$sql1="SELECT email FROM users WHERE email=?";
+				$result = $DB->execute($sql1, array($email));
+				$row = $result->fetchAll(PDO::FETCH_ASSOC);
+				if(count($row)>0){
+					$email_err="Emaili eshte perdorur. Kaloni tek Login per te hyre ne faqe";
+				}
+			}
+		}
+		if(empty($password)){
+			$password_err="Ju lutem vendosni nje password te vlefshem";
+		}
+		else if(isset($password)){
+			if (!preg_match("/^[a-zA-Z0-9]*$/",$password)) {
+				$password_err="Ju lutem vendosni nje username te vlefshem";
+			}
+		}
+		if(empty($kpassword)){
+			$kpassword_err="Ju lutem konfirmoni passwordin";
+		}
+		else if(isset($kpassword)){
+			if (!preg_match("/^[a-zA-Z0-9]*$/",$kpassword)) {
+				$kpassword_err="Ju lutem vendosni nje username te vlefshem";
+			}
+			else if($kpassword!=$password){
+				$kpassword_err="Passwordet nuk ngjasojne";
+			}
+		}
+		if(empty($username_err) && empty($email_err) && empty($password_err) && empty($kpassword_err))
+			$sukses = 'sukses';
+		echo json_encode(array('username' => $username_err,
+							'email' => $email_err,
+							'password' => $password_err,
+							'kpassword' => $kpassword_err,
+							'sukses' => $sukses,
+						));
+	}
 
 	public function login (){
 		$email_err=$password_err=$general_err="";
@@ -229,15 +305,16 @@ class User_Controller
 		if(isset($_GET['email']) && !empty($_GET['email']) AND isset($_GET['hash']) && !empty($_GET['hash'])){
 		    $email = $_GET['email']; 
 		    $hash = $_GET['hash'];
-		    $search = $DB->execute("SELECT email, hash, active FROM users WHERE email='".$email."' AND hash='".$hash."' AND active='0'");
-		    if($search == false){
+		    $search = $DB->execute("SELECT email, hash, active FROM users WHERE email='$email' AND hash='$hash' AND active=0");
+		    $row = $search->fetchAll(PDO::FETCH_ASSOC);
+		    if(count($row) > 0){
 		        $DB->execute("UPDATE users SET active=1 WHERE email='$email' AND hash='$hash' AND active=0");
-		        echo "<script>alert('Llogaria juaj eshte verifikuar. Tani mund te logoheni.')</script>";
-		        header("Refresh: 0; url=index.php?controller=user&action=login");
+		        //echo "<script>alert('Llogaria juaj eshte verifikuar. Tani mund te logoheni.')</script>";
+		        header("Refresh: 0; url=index.php?controller=view&action=verified");
 	    	}
 	    	else{
-	        	echo "<script>alert('URL eshte e pavlefshme ose ju e keni aktivizuar llogarine tuaj.')</script>";
-	        	header("Refresh: 0; url=index.php?controller=user&action=login");
+	        	//echo "<script>alert('asdf.')</script>";
+	        	header("Refresh: 0; url=index.php?controller=view&action=broken_link");
 	   		}
 		}
 		else{
