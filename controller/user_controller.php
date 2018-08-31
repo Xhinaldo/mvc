@@ -99,13 +99,10 @@ class User_Controller
 					$status = 0;
 				else
 					$status = 1;
-				// $dega = $_POST['degas'];
-				// $presql = "SELECT id FROM deget WHERE name = '$dega'";
-				// $preresult= $DB->execute($presql);
-				// $prerow = $preresult->fetch(PDO::FETCH_ASSOC);
-				// $dega_id = $prerow['id'];
+				$dega = $_POST['degas'];
+				
 				$sql = "INSERT INTO users (username, email, password, hash, active, status, dega_id) VALUES (?, ?, ?, ?, ?, ?, ?)";
-				$result= $DB->execute($sql, array($username, $email, $hashed_password, $hash, $active, $status, 1));
+				$result= $DB->execute($sql, array($username, $email, $hashed_password, $hash, $active, $status, $dega));
 				
 				$this->send_email($email,$hash);
 				echo("<script>alert('Ju lutem verifikoni emailin.')</script>");

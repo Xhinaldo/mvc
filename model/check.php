@@ -19,7 +19,7 @@
 			}
 			else if (strlen($username)<4)
 				$username_err = "Username eshte shume i shkurter";
-			else if (strlen($username)>10)
+			else if (strlen($username)>15)
 				$username_err = "Username eshte shume i gjate";
 			else{
 				$sql="SELECT username FROM users WHERE username=?";

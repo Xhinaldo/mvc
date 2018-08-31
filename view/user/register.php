@@ -63,10 +63,10 @@
 			            </div>
 			            <span class="help-block" style="color: #BA0101;" id='fakulspan'></span>
 		            </div>
-		            <div class="form-group" style="display: none;" id='dega' name="degas">
+		            <div class="form-group" style="display: none;" id='dega'>
 		              	<div class="form-group">
 			                <label >Select list:</label>
-						  	<select class="form-control" id="degas">
+						  	<select class="form-control" id="degas" name="degas">
 							</select>
 							<span class="help-block" style="color: #BA0101;" id='degaspan'></span>
 			            </div>
@@ -88,7 +88,7 @@
 
 <script>
 	$(document).ready(function(){
-		$('input[type="submit"]').click(function(){
+		$('#register input').keyup(function(){
 			var username = $('#username').val();
 			var email = $('#email').val();
 			var password = $('#password').val();
@@ -111,8 +111,9 @@
 				$('#fakulspan').text(json.fakulteti);
 				$('#degaspan').text(json.dega);
 				$('#sukses').text(json.sukses);
-				if(json.sukses != '')
+				$('input[type="submit"]').click(function(){
 					$('#register').submit();
+				});
 			});
 		});
 

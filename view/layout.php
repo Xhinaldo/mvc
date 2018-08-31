@@ -30,7 +30,7 @@
 						<a href="http://localhost/mvc/index.php?controller=user&action=logout"><button class="btn btn-danger">DIL</button></a>
 					<?php else: ?>
 						<a href="http://localhost/mvc/index.php?controller=user&action=login"><button class="btn btn-info">HYR</button></a>
-						<a href="http://localhost/mvc/index.php?controller=user&action=register"><button class="btn btn-primary">RRGJISTROHU</button></a>
+						<a href="http://localhost/mvc/index.php?controller=user&action=register"><button class="btn btn-primary">REGJISTROHU</button></a>
 					<?php endif; ?>
 				</div>	
 			
