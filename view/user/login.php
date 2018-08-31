@@ -43,9 +43,10 @@
 	                <span class="help-block" class="alerti" id="passpan"></span>
 	            </div>
 	            <div class="form-group">
-	                <input type="submit" class="btn btn-warning" value="Login">
+	                <input type="submit" class="btn btn-warning" value="Hyr">
+	                <input type="reset" class="btn btn-default" value="Fshi">
 	            </div>
-	            <p>Nuk ke nje llogari? <a href="signupForm.php" style="color: #BA0101;"><b>Rregjistrohu tani</b></a>.</p>
+	            <p>Nuk ke nje llogari? <a href="http://localhost/mvc/index.php?controller=user&action=register" style="color: #BA0101;"><b>Rregjistrohu tani</b></a>.</p>
 	        </form>
 	    </fieldset>
 	    </div>
@@ -66,10 +67,11 @@
 
 				$('#emspan').text(json.username);
 				$('#passpan').text(json.password);
-				$('input[type="submit"]').click(function(){
-					$('#login').submit();
-				});
-
+				if(json.sukses != ''){
+					$('input[type="submit"]').click(function(){
+						$('#login').submit();
+					});
+				}
 			});
 
        });
