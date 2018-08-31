@@ -100,7 +100,7 @@ body {
 	<div class="square">
 		<a href="#">
 	     <div class="content">
-	        <img class="rs" src="magjistratura.png"/>
+	        <img class="rs" src="https://upload.wikimedia.org/wikipedia/commons/e/eb/ASM_Seal.jpg"/>
 	    <!-- SHKOLLA E MAGJISTRATURES -->
 	   
 	     </div>
