@@ -119,7 +119,10 @@ class User_Controller
 		$email = $_POST['email'];
 		$password = $_POST['password'];
 		$kpassword = $_POST['kpassword'];
-		$username_err = $email_err = $password_err = $kpassword_err = $sukses = '';
+		$uni = $_POST['universiteti'];
+		$fakul = $_POST['fakulteti'];
+		$dega = $_POST['dega'];
+		$username_err = $email_err = $password_err = $kpassword_err = $uni_err = $fakul_err = $dega_err = $sukses = '';
 		if(empty($username)){
 				$username_err="Ju lutem vendosni nje username te vlefshem";
 		}
@@ -129,7 +132,7 @@ class User_Controller
 			}
 			else if (strlen($username)<4)
 				$username_err = "Username eshte shume i shkurter";
-			else if (strlen($username)>10)
+			else if (strlen($username)>15)
 				$username_err = "Username eshte shume i gjate";
 			else{
 				$sql="SELECT username FROM users WHERE username=?";
@@ -175,13 +178,22 @@ class User_Controller
 				$kpassword_err="Passwordet nuk ngjasojne";
 			}
 		}
-		if(empty($username_err) && empty($email_err) && empty($password_err) && empty($kpassword_err))
+		if(empty($uni))
+			$uni_err = "Ju lutem zgjidhni nje universitet";
+		else if(empty($fakul))
+			$fakul_err = "Ju lutem zgjidhni nje fakultet.";
+		else if(empty($dega))
+			$dega_err = "Ju lutem zgjidhni nje dege.";
+		if(empty($username_err) && empty($email_err) && empty($password_err) && empty($kpassword_err) && empty($uni_err) && empty($fakul_err) && empty($dega_err))
 			$sukses = 'sukses';
 		echo json_encode(array('username' => $username_err,
-							'email' => $email_err,
-							'password' => $password_err,
-							'kpassword' => $kpassword_err,
-							'sukses' => $sukses,
+								'email' => $email_err,
+								'password' => $password_err,
+								'kpassword' => $kpassword_err,
+								'universiteti' => $uni_err,
+								'fakulteti' => $fakul_err,
+								'dega' => $dega_err,
+								'sukses' => $sukses,
 						));
 	}
 
@@ -318,6 +330,48 @@ class User_Controller
 		    echo "<script>alert('URL eshte e pavlefshme ose ju e keni aktivizuar llogarine tuaj.')</script>";
 	        header("Refresh: 0; url=index.php?controller=view&action=home");
 		}
+	}
+
+	public function upload_picture(){
+		global $DB;
+		$uploadOk=1;
+		$target_dir = "uploads/";
+	    $target_file = $target_dir . basename($_FILES["image"]["name"]);
+		$imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
+	    
+	    if(isset($_POST["submit"])) {
+	    $check = getimagesize($_FILES["image"]["tmp_name"]);
+	        if($check !== false) {
+	        	if ($_FILES["image"]["size"] > 500000) {
+	                echo "Sorry, your file is too large.";
+	                $uploadOk = 0;
+	            }else{
+	            	if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg" && $imageFileType != "pdf" ){
+	                   echo "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
+	                   $uploadOk = 0;
+	                }
+	            }
+	      
+	        }
+	        else {
+	        echo "File is not an image.";
+	        $uploadOk = 0;
+	        }
+	    }
+	    if ($uploadOk == 0) {
+	    echo "Sorry, your file was not uploaded.";
+	    // if everything is ok, try to upload file
+	     } else {
+	    $image=addslashes(file_get_contents($_FILES['image']['tmp_name']));
+		$fileinfo=PATHINFO($_FILES["image"]["name"]);
+		$newFilename=$fileinfo['filename'] ."_". time() . "." . $fileinfo['extension'];
+		move_uploaded_file($_FILES["image"]["tmp_name"],$target_dir . $newFilename);
+		$location=$target_dir . $newFilename;
+	 
+		$query = $DB->execute("INSERT INTO image_tb (img_location,image) VALUES ('$location','$image')");
+		//header('location:uf.php');
+	    }
+
 	}
 
 	public function thjeshteso($data)

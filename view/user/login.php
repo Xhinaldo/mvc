@@ -59,12 +59,15 @@
       		$('#login input').keyup(function(){
 			var username = $('#username').val();
 			var password = $('#password').val();
+			//alert(password);
+
 
 			event.preventDefault();
 
 			$.post('model/check_login.php',{username: username,  password: password}, function(data){
+				alert(data);
 				var json = JSON.parse(data);
-
+				console.log(data);
 				$('#emspan').text(json.username);
 				$('#passpan').text(json.password);
 				if(json.sukses != ''){

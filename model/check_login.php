@@ -6,19 +6,16 @@ require_once('../config.php');
 		$password = $_POST['password'];
 		$username_err  = $password_err = $general_err = $sukses = '';
 
-		if(empty($username)){
+			if(empty($username)){
 				$username_err="Ju lutem vendosni nje email/username te vlefshem";
 			}
 			else if (isset($username)){
 				if (!preg_match("/([A-Za-z0-9]+)/",$username)) {
-				$username_err="Ju lutem vendosni nje username te vlefshem";
-			}
+					$username_err="Ju lutem vendosni nje username te vlefshem";
+				}
 			}
 			if(empty($password)){
 				$password_err="Ju lutem vendosni nje password te vlefshem";
-			}
-			else if(isset($password)){
-				$password=$password;
 			}
 
 			if(empty($username_err)&&empty($password_err)){
@@ -28,12 +25,12 @@ require_once('../config.php');
 				$hashed_password=md5($password);
 				$sql="SELECT username,email,password,active FROM users WHERE email=? OR username=?";
 				$result = $DB->execute($sql, array($username,$username));
-			    $row = $result->fetch(PDO::FETCH_ASSOC);
+			    $row = $result->fetchAll(PDO::FETCH_ASSOC);
 				//$result = $con->query($sql);
 				if ($row != false){
 					if($row['email'] == $username || $row['username'] == $username)
 					{
-						if ($hashed_password==$row["password"]) {
+						if ($hashed_password == $row["password"]) {
 							if($row["active"] == 1){
 								// echo "<script>alert('Login i suksesshem');</script>";
 				                $_SESSION['email'] = $username;
