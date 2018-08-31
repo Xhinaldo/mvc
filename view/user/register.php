@@ -79,7 +79,7 @@
 		                <input type="submit" class="btn btn-danger" value="Regjistrohu">
 		                <input type="reset" class="btn btn-default" value="Fshi">
 		            </div>
-		            <p>Keni nje llogari? <a href="index.php"style="color: #BA0101;"><b>Bej login ketu.</b></a></p>
+		            <p>Keni nje llogari? <a href="http://localhost/mvc/index.php?controller=user&action=register"style="color: #BA0101;"><b>Bej login ketu.</b></a></p>
 		        </form>
 	        </fieldset>
 	    </div>
