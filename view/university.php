@@ -71,9 +71,9 @@ body {
       ?>
       <div class="square">
         <div class="content">
-          <div class="col-sm-12 px-0">
-            <img class="rs" src="<?php echo $row['img_location']; ?>">
-          </div>
+          <!-- <div class="col-sm-12 px-0"> -->
+            <img class="rs" src="<?php echo $row['img_location']; ?>" style="width: 100%; height: 100%;">
+          <!-- </div> -->
         </div>
       </div>
       <?php

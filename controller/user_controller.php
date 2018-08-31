@@ -20,96 +20,25 @@ class User_Controller
 		
 		if ($_SERVER["REQUEST_METHOD"] == "POST"){
 
-			// if(empty($_REQUEST["username"])){
-			// 	$username_err="Ju lutem vendosni nje username te vlefshem";
-			// 	//echo $username_err;
-			// 	echo "<script>alert('Gabim 1')</script>";
-			// }
-			// else if(isset($_REQUEST["username"])){
-
-			// 	$username = $_REQUEST["username"];
-			// 	$username = $this->thjeshteso($username);
-			// 	if (!preg_match("/^[a-zA-Z0-9]*$/",$username)) {
-			// 		$username_err="Ju lutem vendosni nje username te vlefshem";
-			// 		//echo $username_err;
-			// 		echo "<script>alert('Gabim 2')</script>";
-			// 	}
-			// }
-			// if(empty($_REQUEST["email"])){
-			// 	$email_err="Ju lutem vendosni nje email te vlefshem";
-			// 	//echo $email_err;
-			// }
-			// else if (isset($_REQUEST["email"])){
-			// 	if (!filter_var($_REQUEST["email"], FILTER_VALIDATE_EMAIL)){
-			// 		$email_err="Ju lutem vendosni nje email te vlefshem";
-			// 		//echo $email_err;
-			// 	}
-			// 	else{
-			// 		$email=$_REQUEST["email"];
-			// 		$email_err="";
-			// 		$sql="SELECT username,email FROM users WHERE username=? OR email=?";
-			// 		$result = $DB->execute($sql, array($username,$email));
-			// 		$row = $result->fetchAll(PDO::FETCH_ASSOC);
-			// 		if(count($row)>0){
-			// 			$email_err="Emaili/username eshte perdorur. Kaloni tek Login per te hyre ne faqe";
-			// 			//echo $email_err;
-			// 		}
-			// 	}
-			// }
-			// if(empty($_REQUEST["password"])){
-			// 	$password_err="Ju lutem vendosni nje password te vlefshem";
-			// 	//echo $password_err;
-			// }
-			// else if(isset($_REQUEST["password"])){
-			// 	$password=$_REQUEST["password"];
-			// 	$password = $this->thjeshteso($password);
-			// 	if (!preg_match("/^[a-zA-Z0-9]*$/",$password)) {
-			// 		$password_err="Ju lutem vendosni nje username te vlefshem";
-			// 		//echo $password_err;
-			// 	}
-			// 	else
-			// 		$hash_password=md5($password);
-			// }
-			// if(empty($_REQUEST["kpassword"])){
-			// 	$kpassword_err="Ju lutem konfirmoni passwordin";
-			// 	//echo $kpassword_err;
-			// }
-			// else if(isset($_REQUEST["kpassword"])){
-			// 	$kpassword=$_REQUEST["kpassword"];
-			// 	if (!preg_match("/^[a-zA-Z0-9]*$/",$kpassword)) {
-			// 		$kpassword_err="Ju lutem vendosni nje username te vlefshem";
-			// 		//echo $kpassword_err;
-			// 	}
-			// 	else if($kpassword!=$password){
-			// 		$kpassword_err="Passwordet nuk ngjasojne";
-			// 		//echo $kpassword_err;
-			// 	}
-			// }
-
-			// if(empty($username_err) && empty($email_err) && empty($password_err) && empty($kpassword_err)){
-
-				$username = strtolower($_REQUEST['username']);
-				$email = $_REQUEST['email'];
-				$password =$_REQUEST['password'];
-				$hashed_password = md5($password);
-				$active=0;
-				$hash = md5( rand(0,1000) );
-				$status = $_POST['Radio'];
-				if($status == "HS")
-					$status = 0;
-				else
-					$status = 1;
-				$dega = $_POST['degas'];
-				
-				$sql = "INSERT INTO users (username, email, password, hash, active, status, dega_id) VALUES (?, ?, ?, ?, ?, ?, ?)";
-				$result= $DB->execute($sql, array($username, $email, $hashed_password, $hash, $active, $status, $dega));
-				
-				$this->send_email($email,$hash);
-				echo("<script>alert('Ju lutem verifikoni emailin.')</script>");
-				echo("<script>location.href = 'index.php?controller=user&action=login';</script>");
-				//$sukses = 'sukses';
-				//header("Refresh: 0; url=localhost/mvc/index.php?controller=user&action=login");
-			//}
+			$username = strtolower($_REQUEST['username']);
+			$email = $_REQUEST['email'];
+			$password =$_REQUEST['password'];
+			$hashed_password = md5($password);
+			$active=0;
+			$hash = md5( rand(0,1000) );
+			$status = $_POST['Radio'];
+			if($status == "HS")
+				$status = 0;
+			else
+				$status = 1;
+			$dega = $_POST['degas'];
+			
+			$sql = "INSERT INTO users (username, email, password, hash, active, status, dega_id) VALUES (?, ?, ?, ?, ?, ?, ?)";
+			$result= $DB->execute($sql, array($username, $email, $hashed_password, $hash, $active, $status, $dega));
+			
+			$this->send_email($email,$hash);
+			echo("<script>alert('Ju lutem verifikoni emailin.')</script>");
+			echo("<script>location.href = 'index.php?controller=user&action=login';</script>");
 		}
 		
 	} 
@@ -293,7 +222,7 @@ class User_Controller
 				    $mail->Subject = 'Verifikimi';
 				    $mail->Body    = "
  
-						Faleminderit qe u rregjistruat!
+						Faleminderit qe u regjistruat!
 						Llogaria juaj u krijua dhe eshte gati per tu perdorur.
 						 
 						Kopjoni kete link dhe shkoni tek ky link:
