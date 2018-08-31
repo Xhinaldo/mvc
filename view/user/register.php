@@ -87,7 +87,9 @@
 </body>
 
 <script>
+        
 	$(document).ready(function(){
+		//REGISTER AJAX
 		$('#register input').keyup(function(){
 			var username = $('#username').val();
 			var email = $('#email').val();
@@ -116,7 +118,7 @@
 				});
 			});
 		});
-
+       //RADIO BUTTONS
 		$('input[type="radio"]').click(function(){
 	        if($(this).attr("value")=="HS"){
 	            $("#uni").hide('slow');
@@ -130,6 +132,7 @@
 	    });
 		$('input[type="radio"]').trigger('click');
 		
+		//DROPDOWN AJAX
 		$('#unis').change(function(event) {
 			event.preventDefault();
 			var universiteti = $('#unis').val();

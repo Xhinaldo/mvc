@@ -27,20 +27,20 @@
 	    	<fieldset>
 				<legend>Login</legend>
 	        <p>Ju lutem vendosni emailin/username dhe passwordin</p>
-	        <form action="http://localhost/mvc/index.php?controller=user&action=login" method="POST">
+	        <form action="http://localhost/mvc/index.php?controller=user&action=login" method="POST" id="login">
 	        	<div>
 	        		<span class="help-block" style="color: #BA0101;"><b><?php echo $general_err; ?></b></span>
 	        		<input type="button" style="display: none;" class="btn btn-default" value="Aktivizo" onclick="location.href='ifNotConfirmed.php'" id="aktivizo">
 	        	</div>
 	            <div class="form-group">
 	                <label>Email ose Username</label>
-	                <input type="text" name="email" class="form-control" autocomplete="off" required="on" oninvalid="this.setCustomValidity('Nuk mund te lihet bosh')" oninput="this.setCustomValidity('')" >
-	                <span class="help-block" class="alerti"><b><?php echo $email_err; ?></b></span>
+	                <input type="text" name="email" class="form-control" autocomplete="off" required="on" oninvalid="this.setCustomValidity('Nuk mund te lihet bosh')" oninput="this.setCustomValidity('')" id="username" >
+	                <span class="help-block" class="alerti" id="emspan"></span>
 	            </div>    
 	            <div class="form-group">
 	                <label>Password</label>
-	                <input type="password" name="password" class="form-control" required="on" oninvalid="this.setCustomValidity('Nuk mund te lihet bosh')" oninput="this.setCustomValidity('')">
-	                <span class="help-block" class="alerti"><b><?php echo $password_err; ?></b></span>
+	                <input type="password" name="password" class="form-control" required="on" oninvalid="this.setCustomValidity('Nuk mund te lihet bosh')" oninput="this.setCustomValidity('')" id="password">
+	                <span class="help-block" class="alerti" id="passpan"></span>
 	            </div>
 	            <div class="form-group">
 	                <input type="submit" class="btn btn-warning" value="Login">
@@ -52,3 +52,28 @@
 	
 </div>
 </body>
+
+<script >
+	$(document).ready(function(){
+      		$('#login input').keyup(function(){
+			var username = $('#username').val();
+			var password = $('#password').val();
+
+			event.preventDefault();
+
+			$.post('model/check_login.php',{username: username,  password: password}, function(data){
+				var json = JSON.parse(data);
+
+				$('#emspan').text(json.username);
+				$('#passpan').text(json.password);
+				$('input[type="submit"]').click(function(){
+					$('#login').submit();
+				});
+
+			});
+
+       });
+	});
+
+
+</script>
