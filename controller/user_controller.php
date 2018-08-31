@@ -367,9 +367,9 @@ class User_Controller
 		$newFilename=$fileinfo['filename'] ."_". time() . "." . $fileinfo['extension'];
 		move_uploaded_file($_FILES["image"]["tmp_name"],$target_dir . $newFilename);
 		$location=$target_dir . $newFilename;
-	 
-		$query = $DB->execute("INSERT INTO image_tb (img_location,image) VALUES ('$location','$image')");
-		//header('location:uf.php');
+	 	$dega_id = $_SESSION['dega_id'];
+		$query = $DB->execute("INSERT INTO image_tb (img_location,image,dega_id) VALUES ('$location','$image','$dega_id')");
+		header('location:http://localhost/mvc/index.php?controller=view&action=university&dega_id='.$dega_id);
 	    }
 
 	}

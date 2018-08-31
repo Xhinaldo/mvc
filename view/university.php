@@ -53,7 +53,10 @@ body {
 <body>
   <div class="container-fluid">
   <div>
-    <form method="POST" action="ul.php" enctype="multipart/form-data">
+    <form method="POST" action="index.php?controller=user&action=upload_picture" enctype="multipart/form-data">
+      <?php 
+        $_SESSION['dega_id'] = $_GET['dega_id'];
+      ?>
       <label>Image:</label><input type="file" accept="image/*" name="image">
       <button type="submit" name="submit">Upload</button>
     </form>

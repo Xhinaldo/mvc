@@ -32,18 +32,18 @@
 	 			<div class="col-sm-6 px-0 hover08">
 	 				<a href="http://localhost/mvc/index.php?controller=view&action=hs">
 	 					<figure>
-	 						<img class="img-fluid w-100 h-100 img-thumbnail" src="view/images/hs.jpg" id="hs">
-	 						<div style="background-color: red;"><h1 class="centeredhs">Shkolla e mesme</h1></div>
+	 						<img class="img-fluid width-100 img-thumbnail" src="view/images/hs.jpg" id="hs" style="min-height: 500px;max-height: 500px;object-fit: cover;">
+	 						<div style="background-color: red;"><h1 class="centeredhs" style="border: 0px solid #007bff3b; border-radius: 25px; background: #ffffff7a;padding: 10px;">Shkolla e mesme</h1></div>
 	 					</figure>
 	 					
 	 				</a>
 	 			</div>
 	 			<div class="col-sm-6 px-0 hover08" >
-	 				<a href="http://localhost/mvc/index.php?controller=view&action=university" >
+	 				<a href="http://localhost/mvc/index.php?controller=view&action=uni_menu" >
 	 					<figure >
-	 						<img class="img-fluid w-100 h-100 img-thumbnail" src="view/images/uni.jpg" id="uni">
+	 						<img class="img-fluid img-thumbnail" src="view/images/uni.jpg" id="uni" style="min-height: 500px;max-height: 500px;object-fit: cover;">
 	 						<div >
-	 							<h1  class="centereduni">Universiteti</h1>
+	 							<h1  class="centereduni" style="border: 0px solid #007bff3b; border-radius: 25px;background: #ffffff7a;padding: 10px;">Universiteti</h1>
 	 						</div>
 	 					</figure>
 	 					
