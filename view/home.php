@@ -40,7 +40,7 @@
 	 			</div>
 	 			<div class="col-sm-6 px-0 hover08" >
 	 				<a href="http://localhost/mvc/index.php?controller=view&action=university" >
-	 					<figure style="border-color: red;">
+	 					<figure >
 	 						<img class="img-fluid w-100 h-100 img-thumbnail" src="view/images/uni.jpg" id="uni">
 	 						<div >
 	 							<h1  class="centereduni">Universiteti</h1>
