@@ -10,6 +10,10 @@
 
     }
 
+    public function uni_menu(){
+      require_once('view/uni_menu.php');
+    }
+
     public function error_2() {
       require_once('view/error_2.php');
     }

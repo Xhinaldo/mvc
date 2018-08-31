@@ -32,6 +32,9 @@
 						<a href="http://localhost/mvc/index.php?controller=user&action=login"><button class="btn btn-info">HYR</button></a>
 						<a href="http://localhost/mvc/index.php?controller=user&action=register"><button class="btn btn-primary">REGJISTROHU</button></a>
 					<?php endif; ?>
+
+					<a href="http://localhost/mvc/index.php?controller=view&action=uni_menu"><button class="btn btn-info">Universitetet</button></a>
+					<!-- <a href="http://localhost/mvc/index.php?controller=view&action=uni_menu"><button class="btn btn-info">Dega2</button></a> -->
 				</div>	
 			
 		</header>

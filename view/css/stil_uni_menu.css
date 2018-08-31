@@ -1,0 +1,64 @@
+@import url(http://fonts.googleapis.com/css?family=Lato:400,900);
+
+.square {
+    float:left;
+    position: relative;
+    width:16%;
+    padding-bottom : 16%; /* raporti 1:1  */
+    margin:1.66%;
+    background-color:#F5FFC6;
+    overflow:hidden;
+    font-size: 70%;
+}
+
+.content {
+    position:absolute;
+    height:90%; /* = 100% - 2*5% padding */
+    width:90%; /* = 100% - 2*5% padding */
+    padding: 5%;
+    
+}
+
+/*  For responsive images */
+
+.content .rs{
+    width:auto;
+    height:auto;
+    max-height:100%;
+    max-width:100%;
+}
+/*  For responsive images as background */
+
+.bg{
+    background-position:center center;
+    background-repeat:no-repeat;
+    background-size:cover; /* you change this to "contain" if you don't want the images to be cropped */
+    color:#FBFFB9;
+}
+
+/*.img1{
+    background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/f/f2/University_of_Tirana_logo.svg/200px-University_of_Tirana_logo.svg.png');
+}
+.img2{
+    background-image: url('https://upload.wikimedia.org/wikipedia/sq/thumb/5/54/UPT_logo.svg/1200px-UPT_logo.svg.png');
+}
+.img3{
+    background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/0/04/Universiteti_i_Arteve.svg/2000px-Universiteti_i_Arteve.svg.png');
+}
+.img4{
+    background-image: url('https://www.eduaktiv.al/templates/jreviews_overrides/views/themes/eduaktivmobile/theme_images/mjekesia.jpg');
+}
+.img5{
+    background-image: url('https://upload.wikimedia.org/wikipedia/commons/e/eb/ASM_Seal.jpg');
+}
+*/
+
+
+
+body {
+    font-size:20px;
+    font-family: 'Lato',verdana, sans-serif;
+    color: #F5FFC6;
+    background:#F5FFC6;
+}
+
