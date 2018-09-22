@@ -101,7 +101,7 @@
 			var dega = $('#degas option:selected').text();
 			//alert(status);
 			event.preventDefault();
-			$.post('model/check.php',{username: username, email: email, password: password, kpassword: kpassword, universiteti: universiteti, fakulteti: fakulteti, dega: dega}, function(data){
+			$.post('index.php?controller=user&action=registerAJAX&type=action',{username: username, email: email, password: password, kpassword: kpassword, universiteti: universiteti, fakulteti: fakulteti, dega: dega}, function(data){
 				//alert(data);
 				var json = JSON.parse(data);
 				console.log(json);

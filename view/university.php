@@ -46,40 +46,88 @@ body {
     font-size:20px;
     font-family: 'Lato',verdana, sans-serif;
     color: #40434E;
-    background:#ECE8EF;
+    background: #ffffff;
 }
   </style>
 </head>
 <body>
   <div class="container-fluid">
-  <div>
-    <form method="POST" action="index.php?controller=user&action=upload_picture" enctype="multipart/form-data">
-      <?php 
-        $_SESSION['dega_id'] = $_GET['dega_id'];
-      ?>
-      <label>Image:</label><input type="file" accept="image/*" name="image">
-      <button type="submit" name="submit">Upload</button>
-    </form>
-  </div>
-  
-  <div class="container">
-  <?php
-    global $DB;
-    $dega = $_GET['dega_id'];
-    $query=$DB->execute("SELECT * FROM image_tb WHERE dega_id = '$dega' ORDER BY imageid DESC");
-    while($row=$query->fetch(PDO::FETCH_ASSOC)){
-      ?>
-      <div class="square">
-        <div class="content">
-          <!-- <div class="col-sm-12 px-0"> -->
-            <img class="rs" src="<?php echo $row['img_location']; ?>" style="width: 100%; height: 100%;">
-          <!-- </div> -->
-        </div>
+    <?php 
+    if (isset($_SESSION['email'])): ?>
+      <div>
+        <form method="POST" action="index.php?controller=user&action=upload_picture" enctype="multipart/form-data">
+          <?php 
+            $_SESSION['dega_id'] = $_GET['dega_id'];
+          ?>
+          <label>Image:</label><input type="file" accept="image/*" name="image">
+          <button type="submit" name="submit">Upload</button>
+        </form>
       </div>
-      <?php
-    }
-  ?>
+    <?php endif; ?>
+    
+    <div class="container">
+
+      <div class="row">
+        
+          <?php
+            global $DB;
+            $dega = $_GET['dega_id'];
+            $query=$DB->execute("SELECT * FROM image_tb WHERE dega_id = '$dega' ORDER BY imageid DESC");
+            while($row=$query->fetch(PDO::FETCH_ASSOC)){
+              $post_id = $row['imageid'];
+              $dega = $_GET['dega_id'];
+              ?><div class="col-sm-12" class="post">
+                <!-- <div class="square"> -->
+                  <div class="col-sm-6">
+                    <!-- <div class="content"> -->
+                        <img class="img-fluid" src="<?php echo $row['img_location']; ?>" style="width: 100%; height: 100%;">
+                    <!-- </div> -->
+                  </div>
+                  <div class="col-sm-6">
+                    <form>
+                      <textarea id="<?php echo $row['imageid'] ?>" rows="2" placeholder="Komento ketu" maxlength="256" style="outline: none;"></textarea>
+                      <input type="submit" name="<?php echo $row['imageid'] ?>" value="Shto" class="btn btn-warning">
+                    </form>
+                  </div>
+                  <div class="col-sm-6" id='com<?php echo $row['imageid'] ?>'>
+                    
+                  </div>
+                
+              <!-- </div> -->
+              </div>
+              <?php
+            }
+          ?>
+        
       </div>
+    </div>
   </div>
 </body>
+<script type="text/javascript">
+  $(document).ready(function(event){
+    
+      $('input[type="submit"]').click(function(event){
+        event.preventDefault();
+        var post_id = event.target.name;
+        var komenti = $('#'+post_id).val();
+        // var email = '<?php //echo $_SESSION['email']?>';
+        var lenda = <?php echo $dega ?>;
+        var post_id = event.target.name;
+        var html = '';
+        //alert(post_id);
+        $.post('index.php?controller=user&action=addComment&type=action',{comment: komenti, lenda: lenda, post_id: post_id}, function(data){
+         alert(data);
+          var json = JSON.parse(data);
+          console.log(data);
+          for(var i=0 ; i < json.comments.length ; i++){
+            html += '<p><span><b>'+json.comments[i].username+'</b> ka komentuar: </span>'+json.comments[i].comment+'</p>';
+            $('#com'+post_id).append(html);
+            
+          }
+        });
+
+        $('#komenti').val('');
+      });
+  });
+</script>
 </html>

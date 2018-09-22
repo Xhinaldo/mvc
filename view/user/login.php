@@ -64,13 +64,17 @@
 
 			event.preventDefault();
 
-			$.post('model/check_login.php',{username: username,  password: password}, function(data){
-				alert(data);
+			$.post('index.php?controller=user&action=loginAJAX&type=action',{username: username,  password: password}, function(data){
+				//alert(data);
 				var json = JSON.parse(data);
-				console.log(data);
+				//console.log(data);
 				$('#emspan').text(json.username);
-				$('#passpan').text(json.password);
-				if(json.sukses != ''){
+				if(json.general == '')
+					$('#passpan').text(json.password);
+				else
+					$('#passpan').text(json.general);
+				if(!empty(json.sukses)){
+					$('#passpan').text('');
 					$('input[type="submit"]').click(function(){
 						$('#login').submit();
 					});

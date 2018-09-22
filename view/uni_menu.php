@@ -41,7 +41,7 @@
 	    font-size:20px;
 	    font-family: 'Lato',verdana, sans-serif;
 	    color: #F5FFC6;
-	    background:#F5FFC6;
+	    background:#fff;
 }
 
 
@@ -82,7 +82,7 @@
 	     </div>
 	    <!-- </a> -->
 	</div>
-	<div id="fakultetet">
+	<div id="fakultetet" >
 		
 	</div>
 

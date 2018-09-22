@@ -22,8 +22,15 @@ $mail = new PHPMailer(true);
     $controller = 'view';
     $action     = 'home';
   }
+
   session_start();
-  require_once('view/layout.php');
+  
+  if(isset($_GET['type']) && $_GET['type'] == 'action'){
+    require_once('routes.php'); 
+  }else{
+    require_once('view/layout.php');
+  }
+
 
   
 ?>

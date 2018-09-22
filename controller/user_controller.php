@@ -43,7 +43,8 @@ class User_Controller
 		
 	} 
 
-	public function registerAjax(){
+	public function registerAJAX(){
+		global $DB;
 		$username = $_POST['username'];
 		$email = $_POST['email'];
 		$password = $_POST['password'];
@@ -115,6 +116,7 @@ class User_Controller
 			$dega_err = "Ju lutem zgjidhni nje dege.";
 		if(empty($username_err) && empty($email_err) && empty($password_err) && empty($kpassword_err) && empty($uni_err) && empty($fakul_err) && empty($dega_err))
 			$sukses = 'sukses';
+
 		echo json_encode(array('username' => $username_err,
 								'email' => $email_err,
 								'password' => $password_err,
@@ -131,41 +133,52 @@ class User_Controller
 		require_once('view/user/login.php');
 		global $DB;
 
-		if ($_SERVER["REQUEST_METHOD"] == "POST") {	
-			//echo "<script>alert('asdf');</script>";
-			if(empty($_POST["email"])){
-				$email_err="Ju lutem vendosni nje email/username te vlefshem";
+		if ($_SERVER["REQUEST_METHOD"] == "POST") {
+			$email=strtolower($_POST['email']);	
+			$_SESSION['email'] = $email;
+			echo("<script>location.href = 'index.php?controller=view&action=home';</script>");
+		}
+	}
+
+	public function loginAJAX(){
+		global $DB;
+		$username = $_POST['username'];
+		$password = $_POST['password'];
+		$username_err  = $password_err = $general_err = $sukses = '';
+
+			if(empty($username)){
+				$username_err="Ju lutem vendosni nje email/username te vlefshem";
 			}
-			else if (isset($_POST["email"])){
-				$email=$_POST["email"];
+			else if (isset($username)){
+				if (!preg_match("/([A-Za-z0-9]+)/",$username)) {
+					$username_err="Ju lutem vendosni nje username te vlefshem";
+				}
 			}
-			if(empty($_POST["password"])){
+			if(empty($password)){
 				$password_err="Ju lutem vendosni nje password te vlefshem";
 			}
-			else if(isset($_POST["password"])){
-				$password=$_POST["password"];
-			}
 
-			if(empty($email_err)&&empty($password_err)){
+			if(empty($username_err)&&empty($password_err)){
 			
-				$email=strtolower($_POST['email']);
-				$password=trim($_POST['password']);
+				$username=strtolower($username);
+				$password=trim($password);
 				$hashed_password=md5($password);
 				$sql="SELECT username,email,password,active FROM users WHERE email=? OR username=?";
-				$result = $DB->execute($sql, array($email,$email));
+				$result = $DB->execute($sql, array($username,$username));
 			    $row = $result->fetch(PDO::FETCH_ASSOC);
 				//$result = $con->query($sql);
 				if ($row != false){
-					if($row['email'] == $email || $row['username'] == $email)
+					if($row['email'] == $username || $row['username'] == $username)
 					{
-						if ($hashed_password==$row["password"]) {
+						if ($hashed_password == $row["password"]) {
 							if($row["active"] == 1){
-								echo "<script>alert('Login i suksesshem');</script>";
-				                $_SESSION['email'] = $email;
+								// echo "<script>alert('Login i suksesshem');</script>";
+				                $_SESSION['email'] = $username;
+				                $sukses="sukses";
 								echo("<script>location.href = 'index.php?controller=view&action=home';</script>");
 							}
 							else{
-								echo "<script>alert('Llogaria juaj nuk eshte e aktivizuar. Ju lutem aktivizoni llogarine.');</script>";
+								// echo "<script>alert('Llogaria juaj nuk eshte e aktivizuar. Ju lutem aktivizoni llogarine.');</script>";
 								$general_err="Llogaria juaj nuk eshte e aktivizuar. Ju lutem aktivizoni llogarine.";
 								//header("Refresh: 0; url = ifNotConfirmed.php");
 							}
@@ -176,17 +189,17 @@ class User_Controller
 					}
 					else{
 						$general_err="Emaili/username i gabuar.";
-						echo "<script>alert('Dicka shkoi gabim. Provoni serisht.');</script>";
+						//echo "<script>alert('Dicka shkoi gabim. Provoni serisht.');</script>";
 						//header("Refresh: 0; url = index.php");
 					}
 				}
 			}
-			else{
-				$general_err="Dicka shkoi gabim. Provoni serisht.";
-				//echo "<script>alert('Dicka shkoi gabim. Provoni serisht');</script>";
-				//header("Refresh: 0; url = index.php");
-			}
-		}
+
+			echo json_encode(array('username' => $username_err,
+									'password' => $password_err,
+									'general' => $general_err,
+									'sukses' => $sukses,
+			 ));
 	}
 
 	public function logout()
@@ -272,23 +285,24 @@ class User_Controller
 	    $check = getimagesize($_FILES["image"]["tmp_name"]);
 	        if($check !== false) {
 	        	if ($_FILES["image"]["size"] > 500000) {
-	                echo "Sorry, your file is too large.";
+	                echo "<script>alert('Sorry, your file is too large.')</script>";
 	                $uploadOk = 0;
 	            }else{
 	            	if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg" && $imageFileType != "pdf" ){
-	                   echo "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
+	            		echo "<script>alert('Sorry, only JPG, JPEG, PNG & GIF files are allowed.')</script>";
 	                   $uploadOk = 0;
 	                }
 	            }
 	      
 	        }
 	        else {
-	        echo "File is not an image.";
-	        $uploadOk = 0;
+	        	echo "<script>alert('File is not an image.')</script>";
+	        	$uploadOk = 0;
 	        }
 	    }
 	    if ($uploadOk == 0) {
-	    echo "Sorry, your file was not uploaded.";
+	    	echo "<script>alert('Sorry, your file was not uploaded.')</script>";
+	    	echo("<script>location.href = index.php?controller=view&action=uni_menu';</script>");
 	    // if everything is ok, try to upload file
 	     } else {
 	    $image=addslashes(file_get_contents($_FILES['image']['tmp_name']));
@@ -303,6 +317,49 @@ class User_Controller
 
 	}
 
+	public function addComment(){
+		global $DB;
+		$comment = $_POST['comment'];
+		$email = $_SESSION['email'];
+		$lenda = $_POST['lenda'];
+		$post_id = $_POST['post_id'];
+
+		$comment_err = $general_err = $sukses = '';
+
+		if(empty($comment))
+			$comment_err = 'Nuk mund ta lini bosh.';
+		else if(isset($comment)){
+			if(!preg_match("/([A-Za-z0-9]+)/",$comment))
+				$comment_err = 'Gabim ne koment.';
+		}
+		if(empty($email))
+			$general_err = 'Dicka shkoi gabim. Ju lutem i beni refresh faqes dhe provoni serisht';
+		if(empty($lenda))
+			$general_err = 'Dicka shkoi gabim. Ju lutem i beni refresh faqes dhe provoni serisht';
+		if(empty($post_id))
+			$general_err = 'Dicka shkoi gabim. Ju lutem i beni refresh faqes dhe provoni serisht';
+		if(empty($comment_err) && empty($general_err)){
+			$email_result = $DB->execute("SELECT * FROM users WHERE email = '$email' OR username = '$email'");
+			$email_row = $email_result->fetch(PDO::FETCH_ASSOC);
+			if(count($email_row) == 0)
+				$email_id = 128;
+			else{
+				$email_id = $email_row["id"];
+			}
+			$sql = $DB->execute("INSERT INTO comments(comment, user_id, lenda_id, post_id) VALUES ('$comment', '$email_id', '$lenda', '$post_id')"); 
+			$comments_db = $DB->execute("SELECT comments.*, users.username FROM comments LEFT JOIN users ON comments.user_id = users.id WHERE comments.lenda_id = $lenda AND comments.post_id = $post_id ORDER BY id DESC LIMIT 1");
+			$row = $comments_db->fetchAll(PDO::FETCH_ASSOC);
+			$comments = array();
+			foreach($row as $index) {
+				array_push($comments, $index);
+			}
+		}
+
+		echo json_encode(array('comment' => $comment_err,
+								'comments' => $comments,
+		));
+	}
+
 	public function thjeshteso($data)
 	{
 		$data=trim($data);
@@ -313,14 +370,3 @@ class User_Controller
 }
 
 ?>
-
-<script> 
-	var username_err = <?php echo $username_err ?>;
-	var email_err = <?php echo $email_err ?>;
-	var password_err = <?php echo $password_err ?>;
-	var kpassword_err = <?php echo $kpassword_err ?>;
-
-	if (username_err == "") {
-		$('#username').addClass('input-error');
-	}
-</script>

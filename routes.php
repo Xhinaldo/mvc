@@ -17,7 +17,7 @@
   }
 
   $controllers = array('view' => ['home', 'error','university', 'verified', 'broken_link', 'uni_menu'],
-                        'user' => ['register','test','login','logout', 'send_email', 'verify_email', 'registerAjax', 'upload_picture'] , 
+                        'user' => ['register','test','login','logout', 'send_email', 'verify_email', 'registerAJAX','loginAJAX', 'upload_picture', 'addComment'] , 
                       );
 
   if (array_key_exists($controller, $controllers)) {
